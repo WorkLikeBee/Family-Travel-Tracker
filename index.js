@@ -21,6 +21,10 @@ const db = new pg.Pool(
       }
 );
 
+db.on("error", (err) => console.error("DB pool error:", err.message));
+
+db.query("SELECT 1").then(() => console.log("DB connected")).catch((err) => console.error("DB connection failed:", err.message));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(session({
