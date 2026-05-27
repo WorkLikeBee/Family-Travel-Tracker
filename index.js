@@ -7,15 +7,19 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-const db = new pg.Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "world",
-  password: process.env.DB_PASSWORD,
-  port: 5432,
-});
+const db = new pg.Pool(
+  process.env.DATABASE_URL
+    ? { connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } }
+    : {
+        user: "postgres",
+        host: "localhost",
+        database: "world",
+        password: process.env.DB_PASSWORD,
+        port: 5432,
+      }
+);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
