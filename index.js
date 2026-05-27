@@ -110,6 +110,7 @@ async function getUserStats(userId) {
 }
 
 app.get("/", async (req, res) => {
+  try {
   const currentUser = await getCurrentUser(req);
   const userId = req.session.currentUserId;
   const familyView = req.session.familyView || false;
@@ -139,6 +140,10 @@ app.get("/", async (req, res) => {
       visitedDetails, error, success, allCountries, stats,
       familyView, familyCountries,
     });
+  }
+  } catch (err) {
+    console.error("ROUTE ERROR:", err.message);
+    res.status(500).send("Error: " + err.message);
   }
 });
 
