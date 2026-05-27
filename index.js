@@ -21,9 +21,6 @@ const db = new pg.Pool(
       }
 );
 
-db.on("error", (err) => console.error("DB pool error:", err.message));
-
-db.query("SELECT 1").then(() => console.log("DB connected")).catch((err) => console.error("DB connection failed:", err.message));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -285,8 +282,6 @@ app.get("/export/csv", async (req, res) => {
   res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
   res.send(header + body);
 });
-
-app.get("/test", (req, res) => res.send("Express is working!"));
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
