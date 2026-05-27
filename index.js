@@ -286,6 +286,8 @@ app.get("/export/csv", async (req, res) => {
   res.send(header + body);
 });
 
+app.get("/test", (req, res) => res.send("Express is working!"));
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
